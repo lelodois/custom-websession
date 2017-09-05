@@ -1,16 +1,19 @@
-# springboot-customsession
+# springboot-multimvc
 
-Gerenciar a sessão de um webserver no h2
+* Spring-boot integração com múltiplos frameworks mvc
 
-Arquitetura
+## Arquitetura
 
-Java 8
-Maven
-Spring boot / Mvc / Data
-Swagger
-H2
-Junit
-Mockito
-Autor
+* Java 7
+* Maven
+* Spring-boot / Data 
+* Spring mvc
+* Vraptor 3.5
+* Jsf 
+* Primefaces
+* Tomcat embedded
+* Hibernate
 
-Leo Costa - leoeduar@gmail.com Initial work - lelodois
+## Autor
+
+* **Leo Costa** - leoeduar@gmail.com *Initial work* - [lelodois](https://github.com/lelodois)
