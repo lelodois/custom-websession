@@ -1,12 +1,12 @@
-# Customsession on h2
+# Customsession on redis
 
-* Disponibilizar um projeto com a sessão do usuário gerenciada fora do tomcat
+* Disponibilizar a sessão do usuário gerenciada fora do tomcat
 
 ## Arquitetura
 
 * Java 7
 * Tomcat
-* h2
+* Redis
 * Servelet
 * J2ee
 
