@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import br.com.customwebsession.common.UtilsBase64;
+import br.com.customwebsession.common.MyUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisSentinelPool;
 
@@ -62,7 +62,7 @@ public class SessionRepoImpl implements SessionRepo {
 		Object value = null;
 		String str = attributes.get(name);
 		if (str != null) {
-			value = UtilsBase64.fromString(str);
+			value = MyUtils.fromBase64ToString(str);
 		}
 		return value;
 	}
@@ -108,7 +108,7 @@ public class SessionRepoImpl implements SessionRepo {
 		Map<String, String> processedAttributes = new HashMap<>();
 		for (Entry<String, Object> entry : attributes.entrySet()) {
 			String key = processAttribute(entry.getKey());
-			String value = UtilsBase64.toString(entry.getValue());
+			String value = MyUtils.fromObjectToBase64(entry.getValue());
 			processedAttributes.put(key, value);
 		}
 		return processedAttributes;

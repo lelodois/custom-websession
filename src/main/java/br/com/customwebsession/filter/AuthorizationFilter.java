@@ -15,7 +15,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import br.com.customwebsession.common.MyUtils;
-import br.com.customwebsession.servlet.UserPrincipalServletRequest;
+import br.com.customwebsession.servlet.CustomHttpServletRequest;
 
 public class AuthorizationFilter implements Filter {
 
@@ -29,7 +29,7 @@ public class AuthorizationFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
 			throws IOException, ServletException {
-		UserPrincipalServletRequest hrsReq = new UserPrincipalServletRequest((HttpServletRequest) servletRequest);
+		CustomHttpServletRequest hrsReq = new CustomHttpServletRequest((HttpServletRequest) servletRequest);
 
 		if (checkNoRestrictedAccess(hrsReq.getContextPath(), hrsReq.getRequestURI())) {
 			filterChain.doFilter(servletRequest, servletResponse);
