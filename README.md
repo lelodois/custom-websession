@@ -6,7 +6,7 @@
 
 * Java 7
 * Tomcat
-* h2
+* Redis
 * Servelet
 * J2ee
 
