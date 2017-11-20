@@ -1,6 +1,6 @@
-# Customsession on h2
+# Customsession on redis
 
-* Disponibilizar um projeto com a sessão do usuário gerenciada fora do tomcat
+* Disponibilizar a sessão do usuário gerenciada fora do tomcat
 
 ## Arquitetura
 
