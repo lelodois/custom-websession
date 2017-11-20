@@ -1,4 +1,4 @@
-package br.com.customsession.controller;
+package br.com.customwebsession.session;
 
 import java.util.Collections;
 import java.util.Enumeration;
