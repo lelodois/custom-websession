@@ -18,16 +18,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import br.com.customwebsession.common.MyUtils;
+import br.com.customwebsession.dao.SessionRepository;
 import br.com.customwebsession.servlet.CustomHttpServletRequest;
 import br.com.customwebsession.session.HttpSessionImpl;
-import br.com.customwebsession.session.SessionRepo;
 
 public class CustomSessionFilter implements Filter {
 
 	private final static String COOKIENAME = "SSSESSION";
 
 	@Autowired
-	private SessionRepo sessionRepo;
+	private SessionRepository sessionRepo;
 	private FilterConfig config;
 	private List<Pattern> ignorePaths = new ArrayList<Pattern>();
 

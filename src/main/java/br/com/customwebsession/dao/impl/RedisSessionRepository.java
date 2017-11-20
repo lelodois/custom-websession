@@ -1,4 +1,4 @@
-package br.com.customwebsession.session;
+package br.com.customwebsession.dao.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.com.customwebsession.common.MyUtils;
+import br.com.customwebsession.dao.SessionRepository;
+import br.com.customwebsession.session.HttpSessionImpl;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisSentinelPool;
 
 @Repository
-public class SessionRepoImpl implements SessionRepo {
+public class RedisSessionRepository implements SessionRepository {
 
 	@Autowired
 	private JedisSentinelPool jedisPool;

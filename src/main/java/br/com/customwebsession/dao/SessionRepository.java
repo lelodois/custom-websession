@@ -1,11 +1,13 @@
-package br.com.customwebsession.session;
+package br.com.customwebsession.dao;
 
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-public interface SessionRepo {
+import br.com.customwebsession.session.HttpSessionImpl;
+
+public interface SessionRepository {
 
 	HttpSessionImpl persist(HttpSessionImpl session);
 

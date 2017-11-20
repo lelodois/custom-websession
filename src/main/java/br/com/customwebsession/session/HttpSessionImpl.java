@@ -10,13 +10,15 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
+import br.com.customwebsession.dao.SessionRepository;
+
 @SuppressWarnings("deprecation")
 public class HttpSessionImpl implements HttpSession {
 
 	private long creationTime;
 	private long lastAccessedTime;
 	private String id;
-	private SessionRepo repo;
+	private SessionRepository repo;
 
 	private Map<String, Object> sessionCache = new HashMap<String, Object>();
 	private Map<String, String> attributes;
@@ -24,7 +26,7 @@ public class HttpSessionImpl implements HttpSession {
 	private ServletContext servletContext;
 
 	public HttpSessionImpl(ServletContext servletContext, String id, long creationTime, long lastAccessedTime,
-			SessionRepo repo, Map<String, String> attributes) {
+			SessionRepository repo, Map<String, String> attributes) {
 		this.servletContext = servletContext;
 		this.id = id;
 		this.creationTime = creationTime;
@@ -33,7 +35,7 @@ public class HttpSessionImpl implements HttpSession {
 		this.attributes = attributes;
 	}
 
-	public HttpSessionImpl(ServletContext servletContext, String sessionId, SessionRepo sessionRepo) {
+	public HttpSessionImpl(ServletContext servletContext, String sessionId, SessionRepository sessionRepo) {
 		this(servletContext, sessionId, System.currentTimeMillis(), System.currentTimeMillis(), sessionRepo,
 				Collections.<String, String>emptyMap());
 	}
