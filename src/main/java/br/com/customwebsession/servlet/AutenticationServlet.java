@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import br.com.customwebsession.common.Usuario;
-import br.com.customwebsession.controller.AuthServletRequest;
 
-public class SecurityCheckServlet extends HttpServlet {
+public class AutenticationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1025155574281569651L;
 
@@ -46,7 +45,7 @@ public class SecurityCheckServlet extends HttpServlet {
 		}
 
 		req.getSession().setMaxInactiveInterval(1800);
-		req.getSession().setAttribute(AuthServletRequest.USER_PRINCIPAL_KEY, username);
+		req.getSession().setAttribute(UserPrincipalServletRequest.USER_PRINCIPAL_KEY, username);
 
 		resp.sendRedirect(backurl);
 	}

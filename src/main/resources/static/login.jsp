@@ -3,7 +3,7 @@
 <%@ taglib prefix="c"		uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt"		uri="http://java.sun.com/jsp/jstl/fmt"%>
  
-<body class="login-layout" style="background:#eee">
+<body style="background:#eee">
 	<div class="login-box visible widget-box no-border" style="position:absolute;top:40%;left:50%;transform:translate(-50%,-50%); max-width:375px; height:auto; padding:1px; background-color: #AAA!important; box-shadow: 1px 1px 3px #AAA;">
 		<div class="widget-body no-border">
 			<div class="widget-main" style="padding-bottom:10px">
@@ -28,7 +28,7 @@
 							
 								<c:if test="${not empty param.j_username and not empty param.backurl and not empty param.j_password}">
 									<div class="alert alert-danger" id="div-msginvalida">
-										<fmt:message key="labels.usuario.ou.senha.invalidos"/>
+										Erro ao se conectar, login ou senha inválida
 									</div>
 								</c:if>
 
@@ -42,14 +42,5 @@
 			</div>
 		</div>
 	</div>
-							
-	<script type="text/javascript">
-		$(document).ready(function(e){
-			$("#loginForm").submit(function(e){
-				$("input[name='j_username']").val($("input[name='j_username']").val().toUpperCase());
-				$("#loading").show();
-			});
-		});
-	</script>			
 </body>
 

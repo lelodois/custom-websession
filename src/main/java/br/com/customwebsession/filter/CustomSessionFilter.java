@@ -3,7 +3,6 @@ package br.com.customwebsession.filter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
@@ -12,21 +11,20 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import br.com.customwebsession.common.UrlUtils;
-import br.com.customwebsession.servlet.SessionHttpServletRequest;
+import br.com.customwebsession.common.MyUtils;
+import br.com.customwebsession.servlet.CustomHttpSessionServletRequest;
 import br.com.customwebsession.session.HttpSessionImpl;
 import br.com.customwebsession.session.SessionRepo;
 
-public class SessionFilter implements Filter {
+public class CustomSessionFilter implements Filter {
 
-	private static String HRSSESSION_COOKIENAME = "HRSSESSION";
+	private final static String COOKIENAME = "SSSESSION";
 
 	@Autowired
 	private SessionRepo sessionRepo;
@@ -34,14 +32,9 @@ public class SessionFilter implements Filter {
 	private FilterConfig config;
 	private List<Pattern> ignorePaths = new ArrayList<Pattern>();
 
-	private String getSessionId(HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies() != null ? request.getCookies() : new Cookie[0];
-		for (Cookie cookie : cookies) {
-			if (HRSSESSION_COOKIENAME.equals(cookie.getName())) {
-				return cookie.getValue();
-			}
-		}
-		return null;
+	public void init(FilterConfig config) throws ServletException {
+		this.config = config;
+		this.ignorePaths = MyUtils.loadIgnorePaths(config.getInitParameter("IGNORE"));
 	}
 
 	public void destroy() {
@@ -76,7 +69,7 @@ public class SessionFilter implements Filter {
 	private void filter(FilterChain chain, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		HttpSessionImpl session = null;
-		String sessionId = getSessionId(request);
+		String sessionId = MyUtils.getSessionId(request, COOKIENAME);
 
 		try {
 			if (sessionId != null) {
@@ -93,30 +86,16 @@ public class SessionFilter implements Filter {
 			}
 
 			if (sessionId == null || session == null) {
-				sessionId = createSessionId(response);
+				sessionId = MyUtils.createSessionId(response, COOKIENAME);
 				session = sessionRepo.persist(new HttpSessionImpl(config.getServletContext(), sessionId, sessionRepo));
 				session.setNew(true);
 			}
 
-			chain.doFilter(new SessionHttpServletRequest(request, session), response);
+			chain.doFilter(new CustomHttpSessionServletRequest(request, session), response);
 		} finally {
 			if (session != null) {
 				session.commit();
 			}
 		}
-	}
-
-	private String createSessionId(HttpServletResponse response) {
-		String sessionId = UUID.randomUUID().toString();
-		Cookie cookie = new Cookie(HRSSESSION_COOKIENAME, sessionId);
-		cookie.setMaxAge(-1);
-		cookie.setPath("/");
-		response.addCookie(cookie);
-		return sessionId;
-	}
-
-	public void init(FilterConfig config) throws ServletException {
-		this.config = config;
-		ignorePaths = UrlUtils.loadIgnorePaths(config.getInitParameter("IGNORE"));
 	}
 }

@@ -14,10 +14,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import br.com.customwebsession.common.UrlUtils;
-import br.com.customwebsession.controller.AuthServletRequest;
+import br.com.customwebsession.common.MyUtils;
+import br.com.customwebsession.servlet.UserPrincipalServletRequest;
 
-public class AuthFilter implements Filter {
+public class AuthorizationFilter implements Filter {
 
 	private List<Pattern> noRestrictedAccess;
 	private List<String> noRestrictedContexts = Collections.emptyList();
@@ -29,7 +29,7 @@ public class AuthFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
 			throws IOException, ServletException {
-		AuthServletRequest hrsReq = new AuthServletRequest((HttpServletRequest) servletRequest);
+		UserPrincipalServletRequest hrsReq = new UserPrincipalServletRequest((HttpServletRequest) servletRequest);
 
 		if (checkNoRestrictedAccess(hrsReq.getContextPath(), hrsReq.getRequestURI())) {
 			filterChain.doFilter(servletRequest, servletResponse);
@@ -54,7 +54,7 @@ public class AuthFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		noRestrictedAccess = UrlUtils.loadIgnorePaths(filterConfig.getInitParameter("IGNORE"));
+		noRestrictedAccess = MyUtils.loadIgnorePaths(filterConfig.getInitParameter("IGNORE"));
 
 		String context = filterConfig.getInitParameter("NO_RESTRICTED_CONTEXT");
 		if (context != null) {
