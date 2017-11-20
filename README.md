@@ -1,18 +1,14 @@
-# springboot-multimvc
+# Customsession on h2
 
-* Spring-boot integração com múltiplos frameworks mvc
+* Disponibilizar um projeto com a sessão do usuário gerenciada fora do tomcat
 
 ## Arquitetura
 
 * Java 7
-* Maven
-* Spring-boot / Data 
-* Spring mvc
-* Vraptor 3.5
-* Jsf 
-* Primefaces
-* Tomcat embedded
-* Hibernate
+* Tomcat
+* h2
+* Servelet
+* J2ee
 
 ## Autor
 
